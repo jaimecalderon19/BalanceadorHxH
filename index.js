@@ -1,5 +1,6 @@
 import express from "express";
 import axios from "axios";
+import cors from "cors";
 
 const router = express.Router();
 
@@ -85,4 +86,14 @@ router.get("/cazadores/buscar", async (req, res) => {
   }
 });
 
-export default router;
+
+const app = express();
+app.use(cors());
+app.use(express.json());
+
+app.use("/balanceador", router);
+
+app.listen(process.env.PORT || 5000, () => {
+  console.log(`🚀 Balanceador corriendo en puerto ${process.env.PORT || 5000}`);
+});
+
